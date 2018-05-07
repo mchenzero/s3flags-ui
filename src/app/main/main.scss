@@ -1,0 +1,89 @@
+@import "../common/common.scss";
+@import "~bootstrap/scss/bootstrap.scss";
+@import "~font-awesome/scss/font-awesome.scss";
+
+.ng-init-spinner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -0.642855em;
+  margin-top: -0.5em;
+}
+
+.busy {
+  pointer-events: none;
+  position: relative;
+
+  &::before {
+    content: "";
+    background: rgba(255, 255, 255, 0.35);
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+
+  &.btn::before {
+    top: -$btn-border-width;
+    left: -$btn-border-width;
+    bottom: -$btn-border-width;
+    right: -$btn-border-width;
+  }
+
+  &::after {
+    content: $fa-var-spinner;
+    font-family: FontAwesome;
+    font-size: 1.5em;
+    color: #333;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    animation: busy-spin 2s infinite linear;
+  }
+
+  @keyframes busy-spin {
+    0% {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+      transform: translate(-50%, -50%) rotate(359deg);
+    }
+  }
+}
+
+/* tag-input fix */
+tag-input {
+  input {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+}
+
+.modal-size-fix {
+  max-width: $modal-md !important;
+}
+
+/* popover fix */
+.popover {
+  &.bs-popover-left, &.bs-popover-right {
+    .arrow {
+      margin: 0;
+      transform: translate(0, -50%);
+    }
+  }
+  &.bs-popover-top, &.bs-popover-bottom {
+    .arrow {
+      margin: 0;
+      transform: translate(-50%, 0);
+    }
+  }
+}
+
+/* font-awesome fix */
+.fa {
+  &.fa-pencil-square-o::before {
+    position: relative;
+    top: 0.072em;
+  }
+}

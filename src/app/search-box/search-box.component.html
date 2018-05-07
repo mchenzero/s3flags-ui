@@ -1,0 +1,7 @@
+<tag-input [(ngModel)]="tags" [(inputText)]="text"
+           [animationDuration]="{ enter: '0ms', leave: '0ms' }"
+           [onAdding]="addTagInterceptor"
+           (onTextChange)="updateSearchCriteria($event)"
+           (onAdd)="updateSearchCriteria('')" (onRemove)="updateSearchCriteria()"
+           placeholder="Search" secondaryPlaceholder="Search">
+</tag-input>

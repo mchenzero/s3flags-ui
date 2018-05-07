@@ -1,0 +1,69 @@
+<div class="container">
+  <div class="toolbar">
+    <search-box [ngModel]="searchCriteria" (ngModelChange)="updateSearchCriteria($event)"></search-box>
+    <div class="action-icons">
+      <i class="fa fa-refresh" title="refresh" (click)="refresh()" [class.fa-spin]="loading"></i>
+      <i class="fa fa-recycle" title="recycle deleted flags" (click)="recycleMode = !recycleMode" [class.active]="recycleMode"></i>
+    </div>
+  </div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Owner</th>
+        <th>Description</th>
+        <th>Value</th>
+        <th>Tags</th>
+        <th>{{recycleMode ? 'Deleted At' : 'Last Update'}}</th>
+        <th class="action-icons text-right">
+          <ng-container *ngIf="recycleMode">
+            <i class="fa fa-trash-o" title="cleanup flags that have been deleted for more than 30 days" (click)="cleanupDeletedFlags()"></i>
+          </ng-container>
+          <ng-container *ngIf="!recycleMode">
+            <i class="fa fa-plus-circle" title="add a new flag" routerLink="/new"></i>
+          </ng-container>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="flag-row" *ngFor="let flag of flags | search: searchCriteria | deleted: recycleMode | orderBy: recycleMode ? '-deletedAt' : '-updatedAt'; trackBy: flagTrackByFn">
+        <td>{{flag.name}}</td>
+        <td>{{flag.createdBy}}</td>
+        <td>{{flag.description}}</td>
+        <td>
+          <span [popover]="allValues" placement="right" triggers="mouseenter:mouseleave" class="pr-1">
+            <span *ngIf="defaultEnv && flag.environments[defaultEnv]">
+              {{flag.environments[defaultEnv].value}}
+            </span>
+            <span *ngIf="defaultEnv && !flag.environments[defaultEnv]" class="text-muted">
+              undefined
+            </span>
+          </span>
+          <ng-template #allValues>
+            <div *ngFor="let env of flag.environments | keys">
+              {{env}}: <span [class.font-weight-bold]="env === defaultEnv">{{flag.environments[env].value}}</span>
+            </div>
+          </ng-template>
+        </td>
+        <td>
+          <span *ngFor="let tag of flag.tags" class="badge badge-secondary">{{tag}}</span>
+        </td>
+        <td>
+          <span [popover]="(recycleMode ? flag.deletedAt : flag.updatedAt) | date : 'yyyy-MM-dd HH:mm:ss ZZZZZ'"
+                placement="bottom" triggers="mouseenter:mouseleave">
+            {{(recycleMode ? flag.deletedAt : flag.updatedAt) | date : 'yyyy-MM-dd HH:mm:ss'}}
+          </span>
+        </td>
+        <td class="action-icons text-right">
+          <ng-container *ngIf="flag.deletedAt">
+            <i class="fa fa-undo" title="recover flag" (click)="undelete(flag)"></i>
+          </ng-container>
+          <ng-container *ngIf="!flag.deletedAt">
+            <i class="fa fa-pencil-square-o" routerLink="/edit/{{flag.name}}"></i>
+            <i class="fa fa-trash-o" (click)="delete(flag)"></i>
+          </ng-container>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

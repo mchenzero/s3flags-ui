@@ -1,0 +1,58 @@
+<div class="container">
+  <form #form="ngForm" (ngSubmit)="submit(form)" [class.submitted]="form.submitted" novalidate>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input id="name" name="name" [(ngModel)]="flag.name" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" name="description" [(ngModel)]="flag.description"
+                class="form-control" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="description">Tags</label>
+      <tag-input id="description" [(inputText)]="tagInputText"
+                 [(ngModel)]="rawTagModels" [ngModelOptions]="{ standalone: true }"
+                 (onAdd)="updateTags()" (onRemove)="updateTags()" (onTextChange)="updateTags()"
+                 [animationDuration]="{ enter: '0ms', leave: '0ms' }"
+                 placeholder="Enter to add a tag" secondaryPlaceholder="Enter to add a tag">
+      </tag-input>
+    </div>
+    <div class="form-group">
+      <label for="flagType">Type</label>
+      <select id="flagType" name="flagType" [(ngModel)]="flagType" (change)="resetValues()" class="form-control">
+        <option value="boolean">boolean</option>
+        <option value="string">string</option>
+        <option value="number">number</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Environments</label>
+      <ng-container [ngSwitch]="flagType">
+        <ng-container *ngSwitchCase="'boolean'">
+          <div *ngFor="let env of environments" class="form-group">
+            <label>{{env}}</label>
+            <select [name]="'env.' + env" [(ngModel)]="flag.environments[env].value" class="form-control" required>
+              <option [ngValue]="true">true</option>
+              <option [ngValue]="false">false</option>
+            </select>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'string'">
+          <div *ngFor="let env of environments" class="form-group">
+            <label>{{env}}</label>
+            <input [name]="'env.' + env" [(ngModel)]="flag.environments[env].value" class="form-control">
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'number'">
+          <div *ngFor="let env of environments" class="form-group">
+            <label>{{env}}</label>
+            <input type="number" [name]="'env.' + env" [(ngModel)]="flag.environments[env].value"
+                   class="form-control" required>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+    <button type="submit" class="btn btn-primary" [class.busy]="submitting">Create</button>
+  </form>
+</div>

@@ -1,0 +1,5 @@
+@import "../common/common.scss";
+
+.ng-invalid.ng-dirty, .ng-invalid.ng-touched, .submitted .ng-invalid {
+  border-color: $form-feedback-invalid-color;
+}

@@ -1,0 +1,37 @@
+@import "../common/common.scss";
+
+.action-icons {
+  user-select: none;
+
+  .fa {
+    cursor: pointer;
+    outline: none;
+    width: 1.5rem;
+    text-align: center;
+  }
+
+  .fa.active {
+    color: $primary;
+  }
+}
+
+.toolbar {
+  position: relative;
+}
+
+.toolbar .action-icons {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translate(0, -50%);
+  padding-right: 0.75rem;
+  font-size: 1.375em;
+}
+
+th.action-icons {
+  font-size: 1.375em;
+}
+
+.flag-row .action-icons {
+  font-size: 1.25em;
+}

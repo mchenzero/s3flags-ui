@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "commonjs",
+    "outDir": "../dist",
+    "strict": true,
+    "declaration": true
+  },
+  "include": [
+    "s3flags-ui.ts"
+  ]
+}
