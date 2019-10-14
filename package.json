@@ -1,6 +1,6 @@
 {
   "name": "s3flags-ui",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Management UI for s3flags",
   "repository": {
     "type": "git",
@@ -15,7 +15,7 @@
   },
   "peerDependencies": {
     "express": "^4.0.0",
-    "s3flags": "^0.1.0"
+    "s3flags": "^0.1.1"
   },
   "devDependencies": {
     "@angular/common": "^5.2.8",
