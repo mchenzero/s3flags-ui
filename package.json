@@ -46,7 +46,7 @@
     "ngx-bootstrap-modal": "^2.0.1",
     "ngx-chips": "~1.6.7",
     "ngx-pipes": "^2.1.2",
-    "node-sass": "^4.7.2",
+    "node-sass": "^7.0.0",
     "rimraf": "^2.6.2",
     "rxjs": "^5.5.7",
     "s3flags": "^0.1.0",
